@@ -1,44 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Visual Sort
 
-## Available Scripts
+Visualizer for common sorting algorithms using ReactJS TypeScript.
 
-In the project directory, you can run:
+### Features
+- Flexible and easy to implement new sorting algorithms.
+- Supports basic algorithms (ex. quick, merge, bubble, select, insertion) and an algorithm for funsies (stalin sort).
+- Utilizes components for better organization.
 
-### `npm start`
+### How to add a new algorithm
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In ``\src\algorithm\sort``, add a new class with implementing a new interface as shown:
+```TypeScript
+class SomeSort implements Sortable {
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+    // Name of the sorting algorithm
+    public getName() { return 'Some Sort' }
+    
+    // How you would like the algorithm to sort
+    public sort(array: Array<number>): Action {
+        const arr = [...array];
+        const action = new Action();
+        ...
+        return action;
+    }
+    
+}
+```
+Then import that algorithm and add it into the menu in ``\src\components\navBar.tsx``
+And yup, that's it. It's as simple as that! Feel free to refer to the ones I wrote if still curious.
 
-### `npm test`
+### Dependencies
+- NodeJS with typescript extension(duh)
+- React and react-bootstrap module for navigation component
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Todo list
+- Dynamically adjust the height when window size changes
+- Add more methods to shuffle the array (ex. almost sorted, ascending order, etc...)
+- Add an option to adjust the speed and size of an element
+- Add more algorithms
 
-### `npm run build`
+Be aware that this is still far away from being polished, meaning there are still quite a bit of bugs. Though expect for most of issues to be ironed out in coming months.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Example
+![Alt Text](https://media.giphy.com/media/fwEIDMONVFnPNeg8Up/giphy.gif)
