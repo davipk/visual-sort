@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Button, ButtonToolbar } from 'react-bootstrap
 import { Sortable } from '../algorithm/algorithm';
 
 import BubbleSort from '../algorithm/sort/bubbleSort';
+import BubbleSortOptimized from '../algorithm/sort/bubbleSortOptimized';
 import InsertionSort from '../algorithm/sort/insertionSort';
 import MergeSort from '../algorithm/sort/mergeSort';
 import QuickSort from '../algorithm/sort/quickSort';
@@ -34,6 +35,7 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
         this.algorithms = [];
         //Define menu items here
         this.algorithms.push(new BubbleSort());
+        this.algorithms.push(new BubbleSortOptimized());
         this.algorithms.push(new InsertionSort());
         this.algorithms.push(new MergeSort());
         this.algorithms.push(new QuickSort());
