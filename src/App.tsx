@@ -13,7 +13,7 @@ const globalProps: any = {
 
 class App extends React.Component {
 
-  private sortPanel: RefObject<SortPanel> = React.createRef();
+  private sortPanel: RefObject<SortPanel | null> = React.createRef();
 
   /**
    * Selects the algorithm to use.
