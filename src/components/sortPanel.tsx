@@ -14,18 +14,14 @@ interface SortPanelState {
     height: number
 }
 
-class SortPanel extends React.Component<{}, SortPanelState> {
+class SortPanel extends React.Component<SortPanelProps, SortPanelState> {
 
     private selectedAlgorithm: Sortable;
-    private elements: number;
-    private speed: number;
 
     constructor(props: SortPanelProps) {
         super(props);
 
         this.selectedAlgorithm = props.algorithm;
-        this.elements = props.elements;
-        this.speed = props.speed;
 
         this.state = {
             array: [],
@@ -36,12 +32,18 @@ class SortPanel extends React.Component<{}, SortPanelState> {
     }
 
     public setAlgorithm(algo: Sortable): void {
-        console.log(algo.getName())
         this.selectedAlgorithm = algo;
     }
 
+    /**
+     * Returns the per-step delay in milliseconds, derived from the speed prop
+     * (1 = slowest, 10 = fastest).
+     */
     public getSpeed(): number {
-        return this.speed;
+        const speed = this.props.speed;
+        const clamped = Math.max(1, Math.min(10, speed));
+        // Map 1..10 to 60ms..3ms (higher speed -> shorter delay)
+        return Math.max(1, Math.round(63 - clamped * 6));
     }
 
     public componentDidMount(): void {
@@ -53,21 +55,30 @@ class SortPanel extends React.Component<{}, SortPanelState> {
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
+    public componentDidUpdate(prevProps: SortPanelProps): void {
+        if (prevProps.elements !== this.props.elements) {
+            this.shuffleArray();
+        }
+        if (prevProps.algorithm !== this.props.algorithm) {
+            this.selectedAlgorithm = this.props.algorithm;
+        }
+    }
+
     private updateWindowDimensions(): void {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     public shuffleArray(): void {
         const { height } = this.state;
+        const elements = this.props.elements;
         const array: Array<number> = [];
-        const step: number = Math.floor((height - 100) / this.elements);
-        for (let i = 1; i <= this.elements; i++) {
+        // Reserve vertical space for the navbar, container padding, and a top margin.
+        const RESERVED_VERTICAL_PX = 160;
+        const step: number = Math.max(1, Math.floor((height - RESERVED_VERTICAL_PX) / elements));
+        for (let i = 1; i <= elements; i++) {
             array.push(i * step);
         }
         array.sort(() => Math.random() - 0.5);
-        /*for (let i = 0; i < this.elements; i++) {
-            array.push(randomIntFromInterval(10, this.state.height - 100));
-        }*/
         this.setState({ array });
     }
 
@@ -78,7 +89,8 @@ class SortPanel extends React.Component<{}, SortPanelState> {
 
     public render() {
         const { array, width } = this.state;
-        const adjustedWidth = (width - array.length * 3) / array.length;
+        const gap = 2;
+        const adjustedWidth = Math.max(1, (width - 40 - array.length * gap) / Math.max(1, array.length));
         return (
             <div className="array-container">
                 {array.map((value, index) => (
@@ -92,10 +104,6 @@ class SortPanel extends React.Component<{}, SortPanelState> {
             </div>
         );
     }
-}
-
-function randomIntFromInterval(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 export default SortPanel;
