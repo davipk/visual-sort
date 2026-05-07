@@ -55,7 +55,7 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
                 <Navbar.Brand>Visual Sort</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Nav className="me-auto">
                         <NavDropdown title="Algorithms" id="basic-nav-dropdown">
                             {this.algorithms.map((s, index) => (
                                 <NavDropdown.Item
