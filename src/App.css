@@ -1,38 +1,237 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+}
+
+/* ---------- Navbar (glass) ---------- */
+.vs-navbar {
+  background: var(--vs-glass);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--vs-border);
+  box-shadow: var(--vs-shadow);
+  padding: 0.6rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.vs-navbar-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.vs-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--vs-text) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1.15rem;
+}
+
+.vs-brand-mark {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--vs-accent), var(--vs-accent-2));
+  box-shadow: 0 0 18px rgba(124, 92, 255, 0.65);
+}
+
+.vs-nav {
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Algorithm dropdown */
+.vs-dropdown > a.nav-link,
+.vs-dropdown .dropdown-toggle {
+  color: var(--vs-text) !important;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--vs-border);
+  border-radius: 10px;
+  padding: 0.4rem 0.8rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.vs-dropdown > a.nav-link:hover,
+.vs-dropdown .dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vs-dropdown .dropdown-menu {
+  background: rgba(15, 21, 48, 0.95);
+  border: 1px solid var(--vs-border);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: var(--vs-shadow);
+}
+
+.vs-dropdown .dropdown-item {
+  color: var(--vs-text);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.92rem;
+}
+
+.vs-dropdown .dropdown-item:hover,
+.vs-dropdown .dropdown-item.active,
+.vs-dropdown .dropdown-item:focus {
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(34, 211, 238, 0.25));
+  color: #fff;
+}
+
+/* Range sliders (controls) */
+.vs-control {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  min-width: 180px;
+  margin-bottom: 0;
+}
+
+.vs-control-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--vs-text-muted);
+  margin-bottom: 4px;
+  text-align: left;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.vs-control-value {
+  color: var(--vs-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Custom range styling on top of bootstrap form-range */
+.vs-control input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.vs-control input[type="range"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.vs-control input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vs-accent), var(--vs-accent-2));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.vs-control input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vs-accent), var(--vs-accent-2));
+}
+
+.vs-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  margin-top: -5px;
+  border: 2px solid var(--vs-accent);
+  box-shadow: 0 2px 10px rgba(124, 92, 255, 0.6);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vs-control input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--vs-accent);
+  box-shadow: 0 2px 10px rgba(124, 92, 255, 0.6);
+  cursor: pointer;
+}
+
+.vs-control input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+/* Action buttons */
+.vs-actions {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.vs-btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.vs-btn:active {
+  transform: translateY(1px);
+}
+
+.vs-btn-ghost,
+.vs-btn-ghost:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--vs-border);
+  color: var(--vs-text);
+}
+
+.vs-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.vs-btn-primary,
+.vs-btn-primary:focus {
+  background: linear-gradient(135deg, var(--vs-accent), var(--vs-accent-2));
+  border: none;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+}
+
+.vs-btn-primary:hover {
+  background: linear-gradient(135deg, #8c70ff, #3ddff0);
+  box-shadow: 0 10px 28px rgba(124, 92, 255, 0.5);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .vs-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: stretch;
   }
-  to {
-    transform: rotate(360deg);
-  }
+  .vs-actions .vs-btn { flex: 1; }
+  .vs-control { width: 100%; }
 }

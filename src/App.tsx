@@ -5,26 +5,34 @@ import BubbleSort from './algorithm/sort/bubbleSort';
 import NavBar from './components/navBar';
 import { Sortable } from './algorithm/algorithm';
 
-const globalProps: any = {
-  algorithm: new BubbleSort(),
-  elements: 100,
-  speed: 1
-};
+interface AppState {
+  algorithm: Sortable;
+  elements: number;
+  speed: number;
+}
 
-class App extends React.Component {
+class App extends React.Component<{}, AppState> {
 
   private sortPanel: RefObject<SortPanel | null> = React.createRef();
+
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      algorithm: new BubbleSort(),
+      elements: 100,
+      speed: 5
+    };
+  }
 
   /**
    * Selects the algorithm to use.
    * @param algo Selected algorithm.
    */
   public selectAlgorithm(algo: Sortable): void {
+    this.setState({ algorithm: algo });
     const panel: SortPanel | null = this.sortPanel.current;
     if (panel) {
       panel.setAlgorithm(algo);
-    } else {
-      alert('Cannot find the panel.');
     }
   }
 
@@ -35,8 +43,6 @@ class App extends React.Component {
     const panel: SortPanel | null = this.sortPanel.current;
     if (panel) {
       panel.shuffleArray();
-    } else {
-      alert('Cannot find the panel.');
     }
   }
 
@@ -47,16 +53,43 @@ class App extends React.Component {
     const panel: SortPanel | null = this.sortPanel.current;
     if (panel) {
       panel.doSort();
-    } else {
-      alert('Cannot find the panel.');
     }
   }
 
+  /**
+   * Updates the number of elements to sort.
+   */
+  public onElementsChange(elements: number): void {
+    this.setState({ elements });
+  }
+
+  /**
+   * Updates the animation speed (1 = slowest, 10 = fastest).
+   */
+  public onSpeedChange(speed: number): void {
+    this.setState({ speed });
+  }
+
   public render() {
+    const { algorithm, elements, speed } = this.state;
     return (
       <div className="App">
-        <NavBar {...globalProps} doReset={this.onReset.bind(this)} doSort={this.onSort.bind(this)} setAlgo={this.selectAlgorithm.bind(this)} />
-        <SortPanel ref={this.sortPanel} {...globalProps} />
+        <NavBar
+          algorithm={algorithm}
+          elements={elements}
+          speed={speed}
+          doReset={this.onReset.bind(this)}
+          doSort={this.onSort.bind(this)}
+          setAlgo={this.selectAlgorithm.bind(this)}
+          setElements={this.onElementsChange.bind(this)}
+          setSpeed={this.onSpeedChange.bind(this)}
+        />
+        <SortPanel
+          ref={this.sortPanel}
+          algorithm={algorithm}
+          elements={elements}
+          speed={speed}
+        />
       </div>
     );
   }

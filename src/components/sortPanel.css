@@ -1,10 +1,47 @@
 .array-container {
-    position: center;
-    margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  padding: 24px 20px 32px;
+  margin: 24px auto 0;
+  min-height: 70vh;
+  width: calc(100% - 8px);
+  max-width: 100%;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(15, 21, 48, 0.45);
+  border: 1px solid var(--vs-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--vs-shadow);
 }
 
 .array-bar {
-    background-color: red;
-    display: inline-block;
-    margin: 0 1px;
+  background: linear-gradient(180deg, var(--vs-accent-2) 0%, var(--vs-accent) 100%);
+  border-radius: 4px 4px 0 0;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(124, 92, 255, 0.35);
+  transition: background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* When the algorithm sets specific colors via animation fragments
+   (background-color: red/yellow/green/blue), make those visually
+   distinct against the gradient default. */
+.array-bar[style*="background-color: red"] {
+  background: linear-gradient(180deg, #ff7a8a, #ef4444) !important;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.6);
+}
+.array-bar[style*="background-color: yellow"] {
+  background: linear-gradient(180deg, #fde68a, #f59e0b) !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+}
+.array-bar[style*="background-color: green"] {
+  background: linear-gradient(180deg, #6ee7b7, #10b981) !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.6);
+}
+.array-bar[style*="background-color: blue"] {
+  background: linear-gradient(180deg, #93c5fd, #3b82f6) !important;
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
 }
